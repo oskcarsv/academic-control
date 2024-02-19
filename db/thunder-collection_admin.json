@@ -1,0 +1,23 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "admin",
+    "dateExported": "2024-02-19T04:47:17.376Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "758a02fd-202a-4390-95fc-43b3b221b964",
+            "colId": "22dc375c-06ba-434c-9094-cacaba08bd1a",
+            "containerId": "",
+            "name": "usuarios-get",
+            "url": "http://localhost:3000/api/usuarios",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2024-02-18T19:58:08.765Z",
+            "modified": "2024-02-18T22:09:44.872Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

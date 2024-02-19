@@ -1,0 +1,61 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "student",
+    "dateExported": "2024-02-19T04:47:25.271Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "dc0669a9-afb5-4108-ad79-e6680305e183",
+            "colId": "8746715c-8b21-4a6a-b523-85a66404b725",
+            "containerId": "",
+            "name": "student-post",
+            "url": "http://localhost:3000/api/usuarios",
+            "method": "POST",
+            "sortNum": 5000,
+            "created": "2024-02-18T20:02:55.175Z",
+            "modified": "2024-02-18T20:02:55.175Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"nombre\": \"juan\",\n    \"correo\": \"juan@gmail.com\",\n    \"password\": \"123456\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5107e6da-0fd6-4de0-be86-7be06bc2cf8d",
+            "colId": "8746715c-8b21-4a6a-b523-85a66404b725",
+            "containerId": "",
+            "name": "put-student",
+            "url": "http://localhost:3000/api/Usuarios/65d24b58ec0d42f759f107d7",
+            "method": "PUT",
+            "sortNum": 10000,
+            "created": "2024-02-18T19:59:25.129Z",
+            "modified": "2024-02-18T23:54:19.612Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Oscar\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c341ce5-58ab-4747-be62-a59198f255b1",
+            "colId": "8746715c-8b21-4a6a-b523-85a66404b725",
+            "containerId": "",
+            "name": "delete-student",
+            "url": "http://localhost:3000/api/Usuarios/65d259d371e535d225bd6cad",
+            "method": "DELETE",
+            "sortNum": 20000,
+            "created": "2024-02-18T19:59:27.176Z",
+            "modified": "2024-02-18T20:07:38.376Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
