@@ -14,11 +14,11 @@ router.get("/", cursosGet);
 router.post(
     "/", 
     [
-        check("nombre","Name is required").not().isEmpty(),
-        check("nombre").custom(existenteCurso),
+        check('nombre', 'El nombre del curso es obligatorio').not().isEmpty(),
+        check('nombre').custom(existenteCurso),
         check("descripcion","Description is required").not().isEmpty(),
-        check("profesor","Teacher is required").not().isEmpty(),
-        check("profesor").custom(existeTeacherById),
+        check('profesor', 'El profesor con ese ID no existe').not().isEmpty(),
+        check('profesor').custom(existeTeacherById),
         validarCamposCursos,
     ], cursosPost); 
 
