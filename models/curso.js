@@ -12,7 +12,11 @@ const CursoSchema = new mongoose.Schema({
   profesor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario',
-  },
+  }, 
+  estado:{
+    type: Boolean,
+    default: true
+},
 });
 
 module.exports = mongoose.model('Curso', CursoSchema);
