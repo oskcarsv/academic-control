@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { validarCamposCursos } = require('../middlewares/validar-campos-cursos');
+const { validarCampos } = require('../middlewares/validar-campos');
 const { existenteCurso, existeTeacherById, existeCursoById} = require('../helpers/db-validators-cursos');
 
 const { cursosPost, cursosGet, getCursoByid, cursosPut, cursosDelete } = require('../controllers/cursos.controller');
@@ -19,7 +19,7 @@ router.post(
         check("descripcion","Description is required").not().isEmpty(),
         check('profesor', 'El profesor con ese ID no existe').not().isEmpty(),
         check('profesor').custom(existeTeacherById),
-        validarCamposCursos,
+        validarCampos,
     ], cursosPost); 
 
 router.get(
@@ -27,7 +27,7 @@ router.get(
     [
         check("id","El id no es un formato válido de MongoDB").isMongoId(),
         check("id").custom(existeCursoById),
-        validarCamposCursos
+        validarCampos
     ], getCursoByid);
 
 router.put(
@@ -35,7 +35,7 @@ router.put(
     [
         check("id","El id no es un formato válido de MongoDB").isMongoId(),
         check("id").custom(existeCursoById),
-        validarCamposCursos
+        validarCampos
     ], cursosPut);
 
 router.delete(
@@ -43,7 +43,7 @@ router.delete(
         [
             check("id","El id no es un formato válido de MongoDB").isMongoId(),
             check("id").custom(existeCursoById),
-            validarCamposCursos
+            validarCampos
         ], cursosDelete);
 
 module.exports = router;
