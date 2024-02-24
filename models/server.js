@@ -9,6 +9,7 @@ class Server {
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
         this.cursosPath = '/api/cursos';
+        this.cursoUsuariosPath = '/api/cursoUsuarios';
         this.authPath = '/api/auth'
 
 
@@ -33,6 +34,7 @@ class Server {
         this.app.use(this.usuariosPath, require('../routes/user.routes'));
         this.app.use(this.cursosPath, require('../routes/curso.routes'));
         this.app.use(this.authPath, require('../routes/auth.routes'));
+        this.app.use(this.cursoUsuariosPath, require('../routes/cursoUsuario.routes'));
     }
 
     listen() {
