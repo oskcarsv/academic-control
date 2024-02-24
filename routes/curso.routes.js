@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validarCampos } = require('../middlewares/validar-campos');
-const { existenteCurso, existeTeacherById, existeCursoById} = require('../helpers/db-validators-cursos');
+const { existenteCurso, existeTeacher, existeCursoById} = require('../helpers/db-validators-cursos');
 
 const { cursosPost, cursosGet, getCursoByid, cursosPut, cursosDelete } = require('../controllers/cursos.controller');
 const { get } = require('http');
@@ -14,11 +14,11 @@ router.get("/", cursosGet);
 router.post(
     "/", 
     [
-        check('nombre', 'El nombre del curso es obligatorio').not().isEmpty(),
+        check('nombre', 'Name is required').not().isEmpty(),
         check('nombre').custom(existenteCurso),
         check("descripcion","Description is required").not().isEmpty(),
-        check('profesor', 'El profesor con ese ID no existe').not().isEmpty(),
-        check('profesor').custom(existeTeacherById),
+        check('profesor', 'Profesor is required').not().isEmpty(),
+        check('profesor').custom(existeTeacher),
         validarCampos,
     ], cursosPost); 
 
