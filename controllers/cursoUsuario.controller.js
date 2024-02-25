@@ -58,6 +58,7 @@ const cursoUsuariosPost = async (req, res) => {
       }] });
     }
   };
+
     
 module.exports = {
     cursoUsuariosPost,

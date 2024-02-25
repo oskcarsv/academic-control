@@ -18,14 +18,6 @@ const cursosGet = async (req, res = response ) => {
     });
 } 
 
-const getCursoByid = async (req, res) => {
-    const { id } = req.params;
-    const curso = await Curso.findOne({_id: id});
-
-    res.status(200).json({
-        curso
-    });
-}
 
 const cursosPut = async (req, res) => {
     const { id } = req.params;
@@ -62,10 +54,33 @@ const cursosPost = async (req, res) =>{
     });
 }
 
+
+const getCursosByProfesorId = async (req, res) => {
+    try {
+      const { profesorId } = req.body;
+  
+      const cursosDelProfesor = await Curso.find({ profesor: profesorId, estado: true })
+        .populate({
+          path: 'profesor',
+          select: 'nombre',
+        });
+  
+      const cursosInfo = cursosDelProfesor.map(curso => ({
+        nombre: curso.nombre,
+        descripcion: curso.descripcion,
+        profesor: curso.profesor.nombre, 
+      }));
+  
+      res.status(200).json({ cursosDelProfesor: cursosInfo });
+    } catch (error) {
+      res.status(500).json({ errors: [{ msg: 'Error retrieving courses for the professor.' }] });
+    }
+  };  
+
 module.exports = {
     cursosDelete,
     cursosPost,
     cursosGet,
-    getCursoByid,
-    cursosPut
+    cursosPut,
+    getCursosByProfesorId
 }

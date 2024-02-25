@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { existenteCurso, existeTeacher, existeCursoById} = require('../helpers/db-validators-cursos');
 
-const { cursosPost, cursosGet, getCursoByid, cursosPut, cursosDelete } = require('../controllers/cursos.controller');
+const { cursosPost, cursosGet, getCursoByid, cursosPut, cursosDelete, getCursosByProfesorId} = require('../controllers/cursos.controller');
 const { get } = require('http');
 
 const router = Router();
@@ -21,18 +21,11 @@ router.post(
         validarCampos,
     ], cursosPost); 
 
-router.get(
-    "/:id",
-    [
-        check("id","El id no es un formato válido de MongoDB").isMongoId(),
-        check("id").custom(existeCursoById),
-        validarCampos
-    ], getCursoByid);
 
 router.put(
     "/:id",
     [
-        check("id","El id no es un formato válido de MongoDB").isMongoId(),
+        check("id","The id is not a valid MongoDB format").isMongoId(),
         check("id").custom(existeCursoById),
         validarCampos
     ], cursosPut);
@@ -40,9 +33,20 @@ router.put(
 router.delete(
         "/:id",
         [
-            check("id","El id no es un formato válido de MongoDB").isMongoId(),
+            check("id","The id is not a valid MongoDB format").isMongoId(),
             check("id").custom(existeCursoById),
             validarCampos
         ], cursosDelete);
+
+
+router.get(
+  "/cursos-maestro-posee",
+  [
+    check("profesorId","The id is not a valid MongoDB format").isMongoId(),
+    check('profesorId').custom(existeTeacher),
+    validarCampos,
+  ],
+  getCursosByProfesorId
+);        
 
 module.exports = router;

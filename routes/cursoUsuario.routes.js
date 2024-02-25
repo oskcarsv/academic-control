@@ -12,8 +12,11 @@ const router = Router();
 router.post(
     "/", 
     [
+        check("userId","The id is not a valid MongoDB format").isMongoId(),
+        check("cursoId","The id is not a valid MongoDB format").isMongoId(),
+
         check('userId').custom(existeUsuarioById),
-        check('cursoId').custom(existeCursoById), 
+        check('cursoId').custom(existeCursoById),
 
         check('userId').custom(maximoDeAsignaciones),
                                                         
@@ -24,7 +27,8 @@ router.post(
 router.get(
     "/cursos-asignados", 
     [
-        check('userId', 'User ID is require').not().isEmpty(),
+        check("userId","The id is not a valid MongoDB format").isMongoId(),
+
         check('userId').custom(existeUsuarioYCursoAsignado),
         validarCampos,
     ],

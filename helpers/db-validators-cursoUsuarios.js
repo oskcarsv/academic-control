@@ -42,6 +42,11 @@ async function maximoDeAsignaciones(userId) {
 
 async function existeUsuarioYCursoAsignado(userId) {
   const usuario = await Usuario.findById(userId);
+  
+  if (usuario == null) {
+    throw new Error('UserId is require');
+  }
+
   if (!usuario) {
     throw new Error('The user with that ID does not exist.');
   } else if (usuario.role === 'TEACHER_ROLE') {
