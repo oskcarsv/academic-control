@@ -33,28 +33,32 @@ const cursoUsuariosPost = async (req, res) => {
     try {
       const { userId } = req.body;
   
-      const cursosAsignados = await CursoUsuario.find({ userId: userId })
+      const cursosAsignados = await CursoUsuario.find({ userId })
         .populate({
           path: 'cursoId',
           select: 'nombre profesor',
+          populate: {
+            path: 'profesor',
+            select: 'nombre',
+          },
         });
   
       const cursosInfo = cursosAsignados.map(asignacion => ({
         curso: asignacion.cursoId.nombre,
-        profesor: asignacion.cursoId.profesor,
+        profesor: asignacion.cursoId.profesor.nombre,
       }));
   
       res.status(200).json({ 
         cursosAsignados: cursosInfo 
       });
-
+  
     } catch (error) {
       res.status(500).json({ 
         errors: [{ msg: 'Error retrieving assigned courses.' 
       }] });
     }
-  };  
-  
+  };
+    
 module.exports = {
     cursoUsuariosPost,
     getCursosAsignadosByUserId
