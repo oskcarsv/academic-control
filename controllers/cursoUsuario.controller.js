@@ -1,31 +1,6 @@
 const { response, json } = require('express');
 const CursoUsuario = require('../models/cursoUsuario');
 
-const cursoUsuariosGet = async (req, res = response ) => {
-    const { limite, desde } = req.query;
-    const query = { estado: true};
-
-    const [total, cursoUsuarios] = await Promise.all([
-        CursoUsuario.countDocuments(query),
-        CursoUsuario.find(query)
-        .skip(Number(desde))
-        .limit(Number(limite))
-    ]);
-
-    res.status(200).json({
-        total,
-        cursoUsuarios
-    });
-} 
-
-const getCursoUsuariosByid = async (req, res) => {
-    const { id } = req.params;
-    const cursoUsuarios = await CursoUsuario.findOne({_id: id});
-
-    res.status(200).json({
-        cursoUsuarios
-    });
-}
 
 const cursoUsuariosPost = async (req, res) => {
     try {
@@ -33,7 +8,9 @@ const cursoUsuariosPost = async (req, res) => {
   
       const asignacionExistente = await CursoUsuario.findOne({ userId, cursoId });
       if (asignacionExistente) {
-        return res.status(400).json({ errors: [{ msg: 'Student has already been assigned to this course.' }] });
+        return res.status(400).json({ 
+            errors: [{ msg: 'Student has already been assigned to this course.' 
+        }] });
       }
   
       const cursoUsuarios = new CursoUsuario({ userId, cursoId });
@@ -46,13 +23,39 @@ const cursoUsuariosPost = async (req, res) => {
         message: `Successful assignment to the course '${cursoUsuarios.cursoId.nombre}' for the student '${cursoUsuarios.userId.nombre}'.`,
       });
     } catch (error) {
-      res.status(400).json({ errors: [{ msg: error.message }] });
+      res.status(400).json({ 
+        errors: [{ msg: error.message }] 
+      });
     }
   };
+
+  const getCursosAsignadosByUserId = async (req, res) => {
+    try {
+      const { userId } = req.body;
   
+      const cursosAsignados = await CursoUsuario.find({ userId: userId })
+        .populate({
+          path: 'cursoId',
+          select: 'nombre profesor',
+        });
+  
+      const cursosInfo = cursosAsignados.map(asignacion => ({
+        curso: asignacion.cursoId.nombre,
+        profesor: asignacion.cursoId.profesor,
+      }));
+  
+      res.status(200).json({ 
+        cursosAsignados: cursosInfo 
+      });
+
+    } catch (error) {
+      res.status(500).json({ 
+        errors: [{ msg: 'Error retrieving assigned courses.' 
+      }] });
+    }
+  };  
   
 module.exports = {
     cursoUsuariosPost,
-    cursoUsuariosGet,
-    getCursoUsuariosByid,
+    getCursosAsignadosByUserId
 }

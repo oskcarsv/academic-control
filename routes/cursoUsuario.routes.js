@@ -3,13 +3,11 @@ const { check } = require('express-validator');
 
 const { validarCampos } = require('../middlewares/validar-campos');
 const { existeUsuarioById, existeCursoById , maximoDeAsignaciones} = require('../helpers/db-validators-cursoUsuarios');
-const { cursoUsuariosGet, getCursoUsuariosByid, cursoUsuariosPost } = require('../controllers/cursoUsuario.controller');
+const { cursoUsuariosPost, getCursosAsignadosByUserId } = require('../controllers/cursoUsuario.controller');
 
 const { get } = require('http');
 
 const router = Router();
-
-router.get("/", cursoUsuariosGet);
 
 router.post(
     "/", 
@@ -27,12 +25,14 @@ router.post(
 
 
 router.get(
-    "/:id",
+    "/cursos-asignados", 
     [
-        check("id","El id no es un formato válido de MongoDB").isMongoId(),
-        // check("id").custom(existeCursoById),
-        validarCampos
-    ], getCursoUsuariosByid);
+        check('userId', 'User ID is require').not().isEmpty(),
+        check('userId').custom(existeUsuarioById),
+        validarCampos,
+    ],
+    getCursosAsignadosByUserId);
+
 
 
 module.exports = router;
