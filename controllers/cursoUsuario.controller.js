@@ -1,74 +1,58 @@
 const { response, json } = require('express');
-
 const CursoUsuario = require('../models/cursoUsuario');
-const Usuario = require('../models/usuario');
-const Curso = require('../models/curso');
 
+const cursoUsuariosGet = async (req, res = response ) => {
+    const { limite, desde } = req.query;
+    const query = { estado: true};
 
+    const [total, cursoUsuarios] = await Promise.all([
+        CursoUsuario.countDocuments(query),
+        CursoUsuario.find(query)
+        .skip(Number(desde))
+        .limit(Number(limite))
+    ]);
 
-const cursoUsuariosPost = async (req, res) =>{
-    const { userId, cursoId} = req.body;
-    const cursoUsuario = new CursoUsuario({userId, cursoId});
-
-    await cursoUsuario.save();
     res.status(200).json({
-        cursoUsuario
+        total,
+        cursoUsuarios
+    });
+} 
+
+const getCursoUsuariosByid = async (req, res) => {
+    const { id } = req.params;
+    const cursoUsuarios = await CursoUsuario.findOne({_id: id});
+
+    res.status(200).json({
+        cursoUsuarios
     });
 }
 
-
-
-
-// async function asignarCurso(userId, cursoId) {
-//   const usuario = await Usuario.findById(userId);
-//   const curso = await Curso.findById(cursoId);
-
-//   if (!usuario || !curso) {
-//     throw new Error('Usuario o curso no encontrado');
-//   }
-
-//   // Lógica para estudiantes
-//   if (usuario.role === 'STUDENT_ROLE') {
-//     const cursosAsignados = await CursoUsuario.countDocuments({ usuarioId });
-//     if (cursosAsignados >= 3) {
-//       throw new Error('Alumnos no pueden tener más de 3 cursos asignados');
-//     }
-//   }
-
-//   // Verificar si la asignación ya existe
-//   const asignacionExistente = await CursoUsuario.findOne({ userId, cursoId });
-//   if (asignacionExistente) {
-//     throw new Error('El usuario ya está asignado a este curso');
-//   }
-
-//   // Crear la asignación
-//   const nuevaAsignacion = new CursoUsuario({ userId, cursoId });
-//   await nuevaAsignacion.save();
-
-//   return nuevaAsignacion;
-// }
-
-
-// // En el controlador de cursos o en un controlador dedicado a asignaciones
-// const { response } = require('express');
-// const { asignarCurso } = require('./helpers'); // Suponiendo que has colocado la función en un archivo 'helpers'.
-
-// const asignarCursoAUsuario = async (req, res = response) => {
-//   try {
-//     const { userId, cursoId } = req.body;
-//     const asignacion = await asignarCurso(userId, cursoId);
-
-//     res.status(201).json({
-//       msg: 'Curso asignado correctamente',
-//       asignacion,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       msg: error.message,
-//     });
-//   }
-// };
-
-module.exports = { 
-    cursoUsuariosPost
-};
+const cursoUsuariosPost = async (req, res) => {
+    try {
+      const { userId, cursoId } = req.body;
+  
+      const asignacionExistente = await CursoUsuario.findOne({ userId, cursoId });
+      if (asignacionExistente) {
+        return res.status(400).json({ errors: [{ msg: 'Student has already been assigned to this course.' }] });
+      }
+  
+      const cursoUsuarios = new CursoUsuario({ userId, cursoId });
+      await cursoUsuarios.save();
+  
+      await cursoUsuarios.populate('cursoId');
+      await cursoUsuarios.populate('userId');
+  
+      res.status(200).json({
+        message: `Successful assignment to the course '${cursoUsuarios.cursoId.nombre}' for the student '${cursoUsuarios.userId.nombre}'.`,
+      });
+    } catch (error) {
+      res.status(400).json({ errors: [{ msg: error.message }] });
+    }
+  };
+  
+  
+module.exports = {
+    cursoUsuariosPost,
+    cursoUsuariosGet,
+    getCursoUsuariosByid,
+}

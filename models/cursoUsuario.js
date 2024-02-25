@@ -4,12 +4,12 @@ const CursoUsuarioSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Usuario',
-    required: true,
+    required: [true, 'UserId is required']
   },
   cursoId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Curso',
-    required: true,
+    required: [true, 'CourseId is required']
   },
     estado: {
         type: Boolean,
