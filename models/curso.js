@@ -10,8 +10,9 @@ const CursoSchema = new mongoose.Schema({
     required: [true, 'La descripción del curso es obligatoria'],
   },
   profesor: {
-    type: String,
-    required: [true, 'El nombre del profesor del curso es obligatoria'],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Usuario',
+    required: [true, 'Profesor ID is required']
   }, 
   estado:{
     type: Boolean,

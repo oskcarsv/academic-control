@@ -17,7 +17,6 @@ router.post(
         check('nombre', 'Name is required').not().isEmpty(),
         check('nombre').custom(existenteCurso),
         check("descripcion","Description is required").not().isEmpty(),
-        check('profesor', 'Profesor is required').not().isEmpty(),
         check('profesor').custom(existeTeacher),
         validarCampos,
     ], cursosPost); 
