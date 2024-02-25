@@ -68,7 +68,7 @@ const getCursosByProfesorId = async (req, res) => {
       const cursosInfo = cursosDelProfesor.map(curso => ({
         nombre: curso.nombre,
         descripcion: curso.descripcion,
-        profesor: curso.profesor.nombre, 
+        profesor: curso.profesor.nombre,
       }));
   
       res.status(200).json({ cursosDelProfesor: cursosInfo });
