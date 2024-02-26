@@ -1,5 +1,6 @@
 const { response, json } = require('express');
 const Curso = require('../models/curso');
+const CursoUsuario = require('../models/cursoUsuario');
 
 const cursosGet = async (req, res = response ) => {
     const { limite, desde } = req.query;
@@ -67,16 +68,24 @@ const cursosDelete = async (req, res) => {
         return res.status(403).json({ errors: [{ msg: 'Profesor does not have access to delete this course.' }] });
       }
 
+      
+      const result = await CursoUsuario.deleteMany({ cursoId });
+
+      if (result.deletedCount === 0) {
+        return res.status(400).json({ errors: [{ msg: 'No course assignments found for the specified course.' }] });
+      }
+
       await Curso.findByIdAndUpdate(cursoId, { estado: false });
 
       const cursoEliminado = await Curso.findOne({ _id: cursoId });
 
       res.status(200).json({
-          msg: 'Curso eliminado exitosamente',
-          curso: cursoEliminado
+        msg: 'Curso eliminado exitosamente',
+        curso: cursoEliminado,
       });
-  } catch (error) {
-      res.status(500).json({ errors: [{ msg: 'Error deleting the course.' }] });
+      } catch (error) {
+      console.error("Error deleting course assignments:", error);  // Modificado para imprimir el error específico
+      res.status(500).json({ errors: [{ msg: 'Error deleting the course.', error: error.message }] });
   }
 };
 
