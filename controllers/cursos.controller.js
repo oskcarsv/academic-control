@@ -20,29 +20,65 @@ const cursosGet = async (req, res = response ) => {
 
 
 const cursosPut = async (req, res) => {
-    const { id } = req.params;
-    const { _id, descripcion, profesor, ...resto} = req.body;
-    await Curso.findByIdAndUpdate(id, resto);
+  try {
+    const { cursoId, profesorId, ...resto } = req.body;
 
-    const curso = await Curso.findOne({_id: id});
+    if (!cursoId || !profesorId) {
+      return res.status(400).json({ errors: [{ msg: 'Curso ID and Profesor ID are required' }] });
+    }
+    
+    const curso = await Curso.findOne({ _id: cursoId });
+
+    if (!curso) {
+      return res.status(400).json({ errors: [{ msg: 'Course not found.' }] });
+    }
+
+    if (curso.profesor.toString() !== profesorId) {
+      return res.status(403).json({ errors: [{ msg: 'Profesor does not have access to modify this course.' }] });
+    }
+
+    await Curso.findByIdAndUpdate(cursoId, resto);
+    const cursoActualizado = await Curso.findOne({ _id: cursoId });
 
     res.status(200).json({
-        msg: 'Curso Actualizado exitosamente',
-        curso
-    })
-}
+      msg: 'Curso Actualizado exitosamente',
+      curso: cursoActualizado,
+    });
+  } catch (error) {
+    res.status(500).json({ errors: [{ msg: 'Error updating the course.' }] });
+  }
+};
 
 const cursosDelete = async (req, res) => {
-    const {id} = req.params;
-    await Curso.findByIdAndUpdate(id,{estado: false});
+  try {
+      const { cursoId, profesorId } = req.body;
 
-    const curso = await Curso.findOne({_id: id});
+      if (!cursoId || !profesorId) {
+        return res.status(400).json({ errors: [{ msg: 'Curso ID and Profesor ID are required' }] });
+      }
+      
+      const curso = await Curso.findOne({ _id: cursoId });
+  
+      if (!curso) {
+        return res.status(400).json({ errors: [{ msg: 'Course not found.' }] });
+      }
+  
+      if (curso.profesor.toString() !== profesorId) {
+        return res.status(403).json({ errors: [{ msg: 'Profesor does not have access to delete this course.' }] });
+      }
 
-    res.status(200).json({
-        msg: 'Curso a eliminar',
-        curso
-    });
-}
+      await Curso.findByIdAndUpdate(cursoId, { estado: false });
+
+      const cursoEliminado = await Curso.findOne({ _id: cursoId });
+
+      res.status(200).json({
+          msg: 'Curso eliminado exitosamente',
+          curso: cursoEliminado
+      });
+  } catch (error) {
+      res.status(500).json({ errors: [{ msg: 'Error deleting the course.' }] });
+  }
+};
 
 const cursosPost = async (req, res) =>{
     const { nombre, descripcion, profesor} = req.body;
@@ -64,8 +100,13 @@ const getCursosByProfesorId = async (req, res) => {
           path: 'profesor',
           select: 'nombre',
         });
+
+        if (cursosDelProfesor.length === 0) {
+          return res.status(404).json({ errors: [{ msg: 'Profesor does not have any courses.' }] });
+        }  
   
       const cursosInfo = cursosDelProfesor.map(curso => ({
+        id: curso._id,
         nombre: curso.nombre,
         descripcion: curso.descripcion,
         profesor: curso.profesor.nombre,

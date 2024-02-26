@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { existenteCurso, existeTeacher, existeCursoById} = require('../helpers/db-validators-cursos');
 
-const { cursosPost, cursosGet, getCursoByid, cursosPut, cursosDelete, getCursosByProfesorId} = require('../controllers/cursos.controller');
+const { cursosPost, cursosGet, cursosPut, cursosDelete, getCursosByProfesorId} = require('../controllers/cursos.controller');
 const { get } = require('http');
 
 const router = Router();
@@ -22,22 +22,23 @@ router.post(
     ], cursosPost); 
 
 
-router.put(
-    "/:id",
-    [
-        check("id","The id is not a valid MongoDB format").isMongoId(),
-        check("id").custom(existeCursoById),
-        validarCampos
-    ], cursosPut);
-
-router.delete(
-        "/:id",
+    router.put(
+        "/",
         [
-            check("id","The id is not a valid MongoDB format").isMongoId(),
-            check("id").custom(existeCursoById),
+            check("cursoId").custom(existeCursoById),
+            check('profesorId').custom(existeTeacher),
             validarCampos
-        ], cursosDelete);
-
+        ], cursosPut
+    );
+    
+    router.delete(
+        "/",
+        [
+            check("cursoId").custom(existeCursoById),
+            check('profesorId').custom(existeTeacher),
+            validarCampos
+        ], cursosDelete
+    );
 
 router.get(
   "/cursos-maestro-posee",

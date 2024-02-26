@@ -14,9 +14,6 @@ const Usuario = require('../models/usuario');
 
   async function existeTeacher(value) {
     const usuario = await Usuario.findById(value);
-    if (usuario == null) {
-      throw new Error('Teacher ID is require');
-    }
   
     if (!usuario) {
       throw new Error('The teacher with that ID does not exist.');
