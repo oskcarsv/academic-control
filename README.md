@@ -1,4 +1,4 @@
-# academic-control
+# Academic-control
 
 ## API control académico
 
