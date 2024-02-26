@@ -1,0 +1,270 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "academic-control",
+    "dateExported": "2024-02-26T04:33:27.732Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "22218481-0e70-4e94-8ecc-9415c0f20794",
+            "name": "login",
+            "containerId": "",
+            "created": "2024-02-26T04:31:28.297Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "4e2426b8-f1ea-4717-8242-60ea7a3f703a",
+            "name": "student",
+            "containerId": "",
+            "created": "2024-02-26T04:31:48.535Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "4a9ec6cc-2142-4356-a2ae-6559ed255d9a",
+            "name": "teacher",
+            "containerId": "",
+            "created": "2024-02-26T04:32:17.448Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "5a8db392-f58a-4d85-975a-c508005435b1",
+            "name": "admin",
+            "containerId": "",
+            "created": "2024-02-26T04:32:54.661Z",
+            "sortNum": 40000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "beb8174c-f76d-4d2f-a05d-e4315598e654",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "22218481-0e70-4e94-8ecc-9415c0f20794",
+            "name": "login",
+            "url": "http://localhost:3000/api/auth/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-26T04:31:33.286Z",
+            "modified": "2024-02-26T04:31:33.286Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"correo\": \"angel@gmail.com\",\n \"password\": \"123456\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e79a81bc-371c-4e8a-9875-8978afd80a8c",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4e2426b8-f1ea-4717-8242-60ea7a3f703a",
+            "name": "asignacion",
+            "url": "http://localhost:3000/api/cursoUsuarios",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-26T04:31:55.482Z",
+            "modified": "2024-02-26T04:31:55.482Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userId\": \"65dbdf53a090866938dc28cc\",\n  \"cursoId\": \"65dc06203065197e9ced53fe\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "bd863c59-f104-43fe-81fa-2b9af52b3fa3",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4a9ec6cc-2142-4356-a2ae-6559ed255d9a",
+            "name": "crear-curso",
+            "url": "http://localhost:3000/api/cursos",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-26T04:32:24.955Z",
+            "modified": "2024-02-26T04:32:24.955Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n \"nombre\": \"Artes\",\n \"descripcion\": \"Curso de Artes\",\n \"profesor\": \"65dbdf72a090866938dc28dc\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "c7c014cb-da56-46aa-ac0c-f00ef48f72eb",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "5a8db392-f58a-4d85-975a-c508005435b1",
+            "name": "usuarios-get",
+            "url": "http://localhost:3000/api/usuarios",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-02-26T04:32:57.556Z",
+            "modified": "2024-02-26T04:32:57.556Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "6027c48c-d5fa-4565-88ff-3829f1a33987",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "22218481-0e70-4e94-8ecc-9415c0f20794",
+            "name": "student-register",
+            "url": "http://localhost:3000/api/usuarios",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-02-26T04:31:34.884Z",
+            "modified": "2024-02-26T04:31:34.884Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"nombre\": \"oscar\",\n    \"correo\": \"oscar@gmail.com\",\n    \"password\": \"123456\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "969ab313-bd59-4e48-8d7d-c2ff4495eb7b",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4e2426b8-f1ea-4717-8242-60ea7a3f703a",
+            "name": "lista-cursos-asignados",
+            "url": "http://localhost:3000/api/cursoUsuarios/cursos-asignados/",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-26T04:31:57.832Z",
+            "modified": "2024-02-26T04:31:57.832Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userId\": \"65dbdf53a090866938dc28cc\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "4c8e7625-fdbf-4bc6-98fe-2e011d75d38e",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4a9ec6cc-2142-4356-a2ae-6559ed255d9a",
+            "name": "cursos-maestro-posee",
+            "url": "http://localhost:3000/api/cursos/cursos-maestro-posee",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-26T04:32:27.984Z",
+            "modified": "2024-02-26T04:32:27.984Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"profesorId\":\"65dbe5cb7f52ebf18ccb1d0a\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ef283f62-bb6d-4e93-a7b4-4ef24170e026",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "5a8db392-f58a-4d85-975a-c508005435b1",
+            "name": "cursos-get",
+            "url": "http://localhost:3000/api/cursos",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-02-26T04:32:59.008Z",
+            "modified": "2024-02-26T04:32:59.008Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d27bc51b-2971-48a8-b781-3a294a827b31",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "22218481-0e70-4e94-8ecc-9415c0f20794",
+            "name": "teacher-register",
+            "url": "http://localhost:3000/api/usuarios",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-02-26T04:31:36.483Z",
+            "modified": "2024-02-26T04:31:36.483Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"nombre\": \"braulio\",\n    \"correo\": \"braulio@gmail.com\",\n    \"password\": \"123456\",\n    \"role\": \"TEACHER_ROLE\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "71961844-c97a-40c4-8407-62037d3815f7",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4e2426b8-f1ea-4717-8242-60ea7a3f703a",
+            "name": "modificar-estudiante",
+            "url": "http://localhost:3000/api/Usuarios/65da2ceeffed792ce571e38e",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-02-26T04:32:00.168Z",
+            "modified": "2024-02-26T04:32:00.168Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"alejandro\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "509b187c-fae9-4dce-9393-169ab244d2a9",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4a9ec6cc-2142-4356-a2ae-6559ed255d9a",
+            "name": "modificar-curso",
+            "url": "http://localhost:3000/api/cursos/",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-02-26T04:32:31.633Z",
+            "modified": "2024-02-26T04:32:31.633Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cursoId\": \"65dbe5f27f52ebf18ccb1d10\",\n  \"profesorId\": \"65dbe5cb7f52ebf18ccb1d0a\",\n  \"nombre\": \"Artes II\",\n  \"descripcion\": \"Curso de artesII\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "7571fd2e-952b-4dbd-aca1-cab1946b6c53",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4e2426b8-f1ea-4717-8242-60ea7a3f703a",
+            "name": "eliminar-estudiante",
+            "url": "http://localhost:3000/api/Usuarios/65d259d371e535d225bd6cad",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-02-26T04:32:01.737Z",
+            "modified": "2024-02-26T04:32:01.737Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "de3fd319-a85a-401d-8054-becabdfaed5c",
+            "colId": "12ee6d33-ba6a-485b-916d-0763d6f738f7",
+            "containerId": "4a9ec6cc-2142-4356-a2ae-6559ed255d9a",
+            "name": "eliminar-curso",
+            "url": "http://localhost:3000/api/cursos/",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2024-02-26T04:32:33.442Z",
+            "modified": "2024-02-26T04:32:33.442Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cursoId\": \"65dc06343065197e9ced5402\",\n  \"profesorId\": \"65dbdf72a090866938dc28dc\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}
